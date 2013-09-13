@@ -63,15 +63,18 @@ function xlsx(file) {
 		}
 
 		// Get file info from "docProps/core.xml"
-		s = zip.file('docProps/core.xml').asText();
-		s = s.substr(s.indexOf('<dc:creator>') + 12);
-		result.creator = s.substring(0, s.indexOf('</dc:creator>'));
-		s = s.substr(s.indexOf('<cp:lastModifiedBy>') + 19);
-		result.lastModifiedBy = s.substring(0, s.indexOf('</cp:lastModifiedBy>'));
-		s = s.substr(s.indexOf('<dcterms:created xsi:type="dcterms:W3CDTF">') + 43);
-		result.created = new Date(s.substring(0, s.indexOf('</dcterms:created>')));
-		s = s.substr(s.indexOf('<dcterms:modified xsi:type="dcterms:W3CDTF">') + 44);
-		result.modified = new Date(s.substring(0, s.indexOf('</dcterms:modified>')));
+		s = zip.file('docProps/core.xml');
+		if(s) { 
+			s = s.asText();
+			s = s.substr(s.indexOf('<dc:creator>') + 12);
+			result.creator = s.substring(0, s.indexOf('</dc:creator>'));
+			s = s.substr(s.indexOf('<cp:lastModifiedBy>') + 19);
+			result.lastModifiedBy = s.substring(0, s.indexOf('</cp:lastModifiedBy>'));
+			s = s.substr(s.indexOf('<dcterms:created xsi:type="dcterms:W3CDTF">') + 43);
+			result.created = new Date(s.substring(0, s.indexOf('</dcterms:created>')));
+			s = s.substr(s.indexOf('<dcterms:modified xsi:type="dcterms:W3CDTF">') + 44);
+			result.modified = new Date(s.substring(0, s.indexOf('</dcterms:modified>')));
+		}
 
 		// Get workbook info from "xl/workbook.xml" - Worksheet names exist in other places, but "activeTab" attribute must be gathered from this file anyway
 		s = zip.file('xl/workbook.xml').asText(); index = s.indexOf('activeTab="');
