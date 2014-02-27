@@ -1,8 +1,3 @@
-var JSZip = null
-if (typeof require === 'function') {
-	JSZip = require('node-zip');
-}
-
 //----------------------------------------------------------
 // Copyright (C) Microsoft Corporation. All rights reserved.
 // Released under the Microsoft Office Extensible File License
@@ -51,7 +46,7 @@ function xlsx(file) {
    if (typeof file === 'string') { 
    	// Load
 		zipTime = Date.now();
-		zip = zip.load(file, { base64: true });
+		zip = zip.load(file);
 		result = { worksheets: [], zipTime: Date.now() - zipTime };
 		processTime = Date.now();
 
